@@ -13,8 +13,8 @@ export function Landing() {
     <>
     <div className="bg-gradient-to-br from-cyan-500 to-violet-600  h-screen w-full flex flex-col justify-center items-center shadow-sm">
       <div className="top-2 right-2 absolute flex text-slate-100 p-2">
-        <Button variant="outline" className="bg-transparent mr-2">Sign Up</Button>
-        <Button variant="outline" className="bg-transparent">Sign In</Button>
+        <Button variant="outline" className="bg-transparent mr-2">Cadastre-se</Button>
+        <Button variant="outline" className="bg-transparent">Log In</Button>
       </div>
       <Image
         src="/assets/images/reletrify_title.png"
@@ -24,7 +24,7 @@ export function Landing() {
       />
       <div className="space-y-4 w-full">
         <div className="flex flex-col items-center">
-          <h1 className="text-yellow-300 text-xl font-semibold">Recicle, revenda, repare.</h1>
+          <h1 className="text-yellow-300 text-xl font-semibold">Reparar, reutilizar, reciclar.</h1>
           <p className="text-slate-100">Conheça Reletrify, os três R’s da sustentabilidade moderna.</p>
         </div>
         <div className="flex flex-col items-center">
