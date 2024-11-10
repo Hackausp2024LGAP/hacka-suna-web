@@ -12,6 +12,8 @@ import Cookies from "js-cookie"
 import { useEffect, useState } from "react"
 import { PrismaClient } from '@prisma/client'
 import { historyJobsList } from "@/store/historyJobs"
+import { AddJobModal } from "./addJobModal"
+import { SendBudget } from "./sendBudget"
 const prisma = new PrismaClient()
 
 export function JobsHistory() {
@@ -49,20 +51,41 @@ export function JobsHistory() {
     }
 
     return (
-        <div className="w-full flex flex-col p-20 space-y-10">
+        <div className="w-full flex flex-col px-20 py-10 space-y-10">
+            <div className="flex justify-center">
+                {!isVendor && <AddJobModal />}
+            </div>
             {historyJobsList
                 .filter(job => (isVendor ? job.Vendor === username : job.Client === username))
                 .map((job, index) => (
-                    <Card key={`c${job}-${index}`}>
+                    <Card key={`c${job}-${index}`} className="px-20 py-5">
                         <CardHeader>
-                            <CardTitle className="uppercase text-xl">{job.Title}</CardTitle>
-                            <CardDescription className="normal-case text-md">{job.Description}</CardDescription>
+                            <CardTitle className="uppercase text-xl flex flex-row justify-between">
+                                <div>
+                                    {job.Title}
+                                </div>
+                                <div>
+                                    {(isVendor ? job.Client : job.Vendor)}
+                                </div>
+                            </CardTitle>
+                            <CardDescription className="normal-case text-lg text-inherit">{job.Description}</CardDescription>
                         </CardHeader>
                         <CardContent>
-                            <p>Card Content</p>
+                            <div className="flex flex-row justify-between items-center">
+                                <p className="text-2xl font-medium">{job.Price}</p>
+                                {job.Status === "Pendente" ?
+                                    <div className="flex flex-col items-end space-y-3">
+                                        <div className="flex items-center">
+                                            <p className="text-lg">{job.Status}</p>
+                                        </div>
+                                        <SendBudget />
+                                    </div> :
+                                    <p className="text-lg">{job.Status}</p>
+                                }
+                            </div>
                         </CardContent>
                         <CardFooter>
-                            <p>Card Footer</p>
+                            <p>{job.FromDate} a {job.ToDate}</p>
                         </CardFooter>
                     </Card>
                 ))}

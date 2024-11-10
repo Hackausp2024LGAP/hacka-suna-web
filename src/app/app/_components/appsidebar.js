@@ -23,21 +23,23 @@ import Image from "next/image"
 import { useIsMobile } from "@/hooks/use-mobile"
 import { useRouter } from "next/navigation"
 
+import '../styles.css'
+
 // Menu items.
 const items = [
   {
     title: "Início",
-    url: "#",
+    url: "/app",
     icon: Home,
   },
   {
     title: "Conversas",
-    url: "#",
+    url: "/app/chat",
     icon: MessageCircle,
   },
   {
     title: "Descartes",
-    url: "app/descarte",
+    url: "/app/descarte",
     icon: RefreshCcw,
   },
   {
@@ -167,7 +169,7 @@ export function AppSidebar({ children }) {
       {/*<header className="px-20 py-6 xl:px-12 md:py-4 sm:px-6 sm:py-4">
           
         </header>*/}
-      <main className={`w-full p-5 ${isVendor ? 'bg-gradient-to-r from-white to-green-400' : 'bg-gradient-to-r from-white to-blue-400'}`}>
+      <main className={`w-full min-h-screen h-full p-5 ${isVendor ? 'bg-gradient-to-br from-white to-green-400' : 'bg-gradient-to-br from-white to-blue-400'}`}>
         <SidebarTrigger onClick={handleToggleSidebar} />
         <div className='w-full flex justify-center'>
           {children}

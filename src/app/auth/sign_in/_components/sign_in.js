@@ -13,18 +13,26 @@ export function SignIn() {
     const passRef = useRef(null);
 
     const [showModal, setShowModal] = useState(false)
-    
-    async function handleSubmit (event) {
+
+    async function handleSubmit(event) {
         event.preventDefault()
         event.nativeEvent.stopImmediatePropagation();
         const users = await getUsers();
-        if(users.some((item) => (item.email === emailRef.current.value && item.pass === passRef.current.value))){
+        if (users.some((item) => (item.email === emailRef.current.value && item.pass === passRef.current.value))) {
+
+            const userData = {
+                user: item.usuario,
+                email: item.email,
+                cpf: item.cpf,
+            }
+
+            Cookies.set('session', JSON.stringify(userData), { expires: 7 })
             window.location.href = '/app'
         }
-        else{
+        else {
             setShowModal(true)
         }
-      }
+    }
 
     return (
         <div className="rounded-xl w-80 h-96 bg-gray-100 flex align-middle justify-center">
@@ -38,13 +46,13 @@ export function SignIn() {
                     <AlertDialog open={showModal} onOpenChange={setShowModal}>
                         <AlertDialogContent>
                             <AlertDialogHeader>
-                            <AlertDialogTitle>Erro ao entrar</AlertDialogTitle>
-                            <AlertDialogDescription>
-                                Suas credenciais estão incorretas.
-                            </AlertDialogDescription>
+                                <AlertDialogTitle>Erro ao entrar</AlertDialogTitle>
+                                <AlertDialogDescription>
+                                    Suas credenciais estão incorretas.
+                                </AlertDialogDescription>
                             </AlertDialogHeader>
                             <AlertDialogFooter>
-                            <AlertDialogCancel>Continuar</AlertDialogCancel>
+                                <AlertDialogCancel>Continuar</AlertDialogCancel>
                             </AlertDialogFooter>
                         </AlertDialogContent>
                     </AlertDialog>
