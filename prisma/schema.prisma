@@ -11,18 +11,22 @@ datasource db {
 }
 
 model Usuario {
-  cpf Int @id
+  cpf String @id
   nome String
   email String
   pass String
   cel Int
-  isCliente Boolean
-  isTecnico Boolean
 }
 
 model Cliente {
-cpfCliente Int @id
+cpfCliente String @id
 valorConfirmacao Int
+cep String
+rua String
+numero Int
+estado String
+cidade String
+complemento String
 
 // Relations
 pedidos Pedido[]
@@ -33,7 +37,7 @@ ratings Rating[]
 }
 
 model Tecnico {
-cpfTecnico Int @id
+cpfTecnico String @id
 
 // Relations
 avaliacoes Avaliacao[]
@@ -46,8 +50,8 @@ ratings Rating[]
 model Avaliacao {
 idAvaliacao Int @id @default(autoincrement())
 rateCliente Int
-cpfTecnico Int?
-cpfCliente Int?
+cpfTecnico String?
+cpfCliente String?
 
 // Relations
 tecnico Tecnico? @relation(fields: [cpfTecnico], references: [cpfTecnico])
@@ -60,10 +64,11 @@ image String?
 descPedido String
 orcamentoPedido Decimal
 horarioInicioPedido DateTime @default(now())
-cpfTecnico Int?
-cpfCliente Int
+cpfTecnico String?
+cpfCliente String
 horarioPedido DateTime
 statusPedido Boolean
+categoria String
 
 // Relations
 tecnico Tecnico? @relation(fields: [cpfTecnico], references: [cpfTecnico])
@@ -73,8 +78,8 @@ trabalhos Trabalho[]
 
 model Chat {
 idChat Int @id @default(autoincrement())
-cpfTecnico Int?
-cpfCliente Int
+cpfTecnico String?
+cpfCliente String
 statusChat Boolean
 horarioInicioChat DateTime @default(now())
 
@@ -98,8 +103,8 @@ chat Chat? @relation(fields: [idChat], references: [idChat])
 model Rating {
 idRating Int @id @default(autoincrement())
 rateTecnico Int?
-cpfTecnico Int?
-cpfCliente Int?
+cpfTecnico String?
+cpfCliente String?
 
 // Relations
 tecnico Tecnico? @relation(fields: [cpfTecnico], references: [cpfTecnico])
@@ -108,8 +113,8 @@ cliente Cliente? @relation(fields: [cpfCliente], references: [cpfCliente])
 
 model Trabalho {
 idTrabalho Int @id @default(autoincrement())
-cpfTecnico Int?
-cpfCliente Int?
+cpfTecnico String?
+cpfCliente String?
 idPedido Int?
 statusTrabalho Boolean
 orcamentoTrabalho Decimal
@@ -117,6 +122,7 @@ ratingTrabalho Int
 tip Decimal
 horarioMensagem DateTime @default(now())
 dataFimTrabalho DateTime?
+categoria String
 
 // Relations
 tecnico Tecnico? @relation(fields: [cpfTecnico], references: [cpfTecnico])

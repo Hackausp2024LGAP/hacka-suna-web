@@ -8,7 +8,6 @@ import { useRef, useState } from "react";
 import { FallbackMode } from "next/dist/lib/fallback";
 import { redirect } from "next/navigation";
 
-
 export function SignIn() {
     const emailRef = useRef(null);
     const passRef = useRef(null);
@@ -40,9 +39,9 @@ export function SignIn() {
             <form id="form" onSubmit={handleSubmit}>
                 <p className="text-[2rem] text-center mb-12 mt-12">Log In</p>
                 <label className="text-lg">E-mail:</label><br></br>
-                <input type="text" ref={emailRef} name="email" className="p-1 mb-6 outline outline-1 rounded-sm"></input><br></br>
+                <input type="email" ref={emailRef} name="email" className="p-1 mb-6 outline outline-1 rounded-sm"></input><br></br>
                 <label className="text-lg">Senha:</label><br></br>
-                <input type="text" ref={passRef} name="pass" className="p-1 outline outline-1 rounded-sm"></input><br></br>
+                <input type="password" ref={passRef} name="pass" className="p-1 outline outline-1 rounded-sm"></input><br></br>
                 <div className="justify-center flex">
                     <AlertDialog open={showModal} onOpenChange={setShowModal}>
                         <AlertDialogContent>
