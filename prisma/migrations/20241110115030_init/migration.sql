@@ -1,29 +1,31 @@
 -- CreateTable
 CREATE TABLE "Usuario" (
-    "cpf" TEXT NOT NULL PRIMARY KEY,
+    "cpf" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
     "nome" TEXT NOT NULL,
     "email" TEXT NOT NULL,
     "pass" TEXT NOT NULL,
-    "cel" INTEGER NOT NULL
+    "cel" INTEGER NOT NULL,
+    "isCliente" BOOLEAN NOT NULL,
+    "isTecnico" BOOLEAN NOT NULL
 );
 
 -- CreateTable
 CREATE TABLE "Cliente" (
-    "cpfCliente" TEXT NOT NULL PRIMARY KEY,
+    "cpfCliente" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
     "valorConfirmacao" INTEGER NOT NULL
 );
 
 -- CreateTable
 CREATE TABLE "Tecnico" (
-    "cpfTecnico" TEXT NOT NULL PRIMARY KEY
+    "cpfTecnico" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT
 );
 
 -- CreateTable
 CREATE TABLE "Avaliacao" (
     "idAvaliacao" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
     "rateCliente" INTEGER NOT NULL,
-    "cpfTecnico" TEXT,
-    "cpfCliente" TEXT,
+    "cpfTecnico" INTEGER,
+    "cpfCliente" INTEGER,
     CONSTRAINT "Avaliacao_cpfTecnico_fkey" FOREIGN KEY ("cpfTecnico") REFERENCES "Tecnico" ("cpfTecnico") ON DELETE SET NULL ON UPDATE CASCADE,
     CONSTRAINT "Avaliacao_cpfCliente_fkey" FOREIGN KEY ("cpfCliente") REFERENCES "Cliente" ("cpfCliente") ON DELETE SET NULL ON UPDATE CASCADE
 );
@@ -35,8 +37,8 @@ CREATE TABLE "Pedido" (
     "descPedido" TEXT NOT NULL,
     "orcamentoPedido" DECIMAL NOT NULL,
     "horarioInicioPedido" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "cpfTecnico" TEXT,
-    "cpfCliente" TEXT NOT NULL,
+    "cpfTecnico" INTEGER,
+    "cpfCliente" INTEGER NOT NULL,
     "horarioPedido" DATETIME NOT NULL,
     "statusPedido" BOOLEAN NOT NULL,
     CONSTRAINT "Pedido_cpfTecnico_fkey" FOREIGN KEY ("cpfTecnico") REFERENCES "Tecnico" ("cpfTecnico") ON DELETE SET NULL ON UPDATE CASCADE,
@@ -46,8 +48,8 @@ CREATE TABLE "Pedido" (
 -- CreateTable
 CREATE TABLE "Chat" (
     "idChat" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-    "cpfTecnico" TEXT,
-    "cpfCliente" TEXT NOT NULL,
+    "cpfTecnico" INTEGER,
+    "cpfCliente" INTEGER NOT NULL,
     "statusChat" BOOLEAN NOT NULL,
     "horarioInicioChat" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT "Chat_cpfTecnico_fkey" FOREIGN KEY ("cpfTecnico") REFERENCES "Tecnico" ("cpfTecnico") ON DELETE SET NULL ON UPDATE CASCADE,
@@ -68,8 +70,8 @@ CREATE TABLE "Mensagem" (
 CREATE TABLE "Rating" (
     "idRating" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
     "rateTecnico" INTEGER,
-    "cpfTecnico" TEXT,
-    "cpfCliente" TEXT,
+    "cpfTecnico" INTEGER,
+    "cpfCliente" INTEGER,
     CONSTRAINT "Rating_cpfTecnico_fkey" FOREIGN KEY ("cpfTecnico") REFERENCES "Tecnico" ("cpfTecnico") ON DELETE SET NULL ON UPDATE CASCADE,
     CONSTRAINT "Rating_cpfCliente_fkey" FOREIGN KEY ("cpfCliente") REFERENCES "Cliente" ("cpfCliente") ON DELETE SET NULL ON UPDATE CASCADE
 );
@@ -77,8 +79,8 @@ CREATE TABLE "Rating" (
 -- CreateTable
 CREATE TABLE "Trabalho" (
     "idTrabalho" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-    "cpfTecnico" TEXT,
-    "cpfCliente" TEXT,
+    "cpfTecnico" INTEGER,
+    "cpfCliente" INTEGER,
     "idPedido" INTEGER,
     "statusTrabalho" BOOLEAN NOT NULL,
     "orcamentoTrabalho" DECIMAL NOT NULL,
@@ -90,6 +92,3 @@ CREATE TABLE "Trabalho" (
     CONSTRAINT "Trabalho_cpfCliente_fkey" FOREIGN KEY ("cpfCliente") REFERENCES "Cliente" ("cpfCliente") ON DELETE SET NULL ON UPDATE CASCADE,
     CONSTRAINT "Trabalho_idPedido_fkey" FOREIGN KEY ("idPedido") REFERENCES "Pedido" ("idPedido") ON DELETE SET NULL ON UPDATE CASCADE
 );
-
--- CreateIndex
-CREATE UNIQUE INDEX "Usuario_email_key" ON "Usuario"("email");
