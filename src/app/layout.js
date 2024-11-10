@@ -5,9 +5,10 @@ const Rubik = localFont({
   src: '../../public/assets/fonts/Rubik.ttf',
   weight: '400 500'
 })
+
 export const metadata = {
   title: "Reletrify",
-  description: "Recicle, revenda, repare. Sua nova rede para cuidar do mundo do seu jeito",
+  description: "Reparar, Reutilizar, Reciclar. Conheça Reletrify, os três R's da sustentabilidade moderna",
 };
 
 export default function RootLayout({ children }) {

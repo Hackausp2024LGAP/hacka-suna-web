@@ -1,6 +1,6 @@
 'use client'
 
-import { Calendar, ChevronUp, Home, Inbox, Search, Settings, User2, Briefcase } from "lucide-react"
+import { RefreshCcw, ChevronUp, Home, MessageCircle, Settings, User2, Briefcase } from "lucide-react"
 
 import {
   Sidebar,
@@ -9,6 +9,7 @@ import {
   SidebarGroup,
   SidebarGroupContent,
   SidebarGroupLabel,
+  SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
@@ -18,31 +19,28 @@ import {
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { useEffect, useState } from "react"
 import Cookies from 'js-cookie'
+import Image from "next/image"
+import { useIsMobile } from "@/hooks/use-mobile"
 
 // Menu items.
 const items = [
   {
-    title: "Home",
+    title: "Início",
     url: "#",
     icon: Home,
   },
   {
-    title: "Inbox",
+    title: "Conversas",
     url: "#",
-    icon: Inbox,
+    icon: MessageCircle,
   },
   {
-    title: "Calendar",
+    title: "Descartes",
     url: "#",
-    icon: Calendar,
+    icon: RefreshCcw,
   },
   {
-    title: "Search",
-    url: "#",
-    icon: Search,
-  },
-  {
-    title: "Settings",
+    title: "Configurações",
     url: "#",
     icon: Settings,
   },
@@ -62,13 +60,20 @@ const userChooser = [
 export function AppSidebar({ children }) {
   const [isVendor, setIsVendor] = useState(false)
   const [chosenUser, setChosenUser] = useState(userChooser[0])
+  const [defaultOpen, setDefaultOpen] = useState(false)
 
   const [isLoading, setIsLoading] = useState(true)
+
+  const isMobile = useIsMobile()
 
   useEffect(() => {
     const vendorState = Cookies.get('isVendor:state') === 'true'
     setIsVendor(vendorState)
     setChosenUser(userChooser[vendorState ? 1 : 0])
+
+    const sidebarState = Cookies.get('sidebar:state') === 'true'
+    setDefaultOpen(!isMobile && sidebarState)
+
     setIsLoading(false)
   }, [])
 
@@ -77,6 +82,13 @@ export function AppSidebar({ children }) {
     setIsVendor(newState)
     setChosenUser(userChooser[newState ? 1 : 0])
     Cookies.set('isVendor:state', newState.toString())
+    window.dispatchEvent(new Event('vendorStateChange'))
+  }
+
+  const handleToggleSidebar = () => {
+    const newState = isMobile ? true : !defaultOpen
+    setDefaultOpen(newState)
+    !isMobile && Cookies.set('sidebar:state', newState.toString())
   }
 
   if (isLoading) {
@@ -84,8 +96,27 @@ export function AppSidebar({ children }) {
   }
 
   return (
-    <SidebarProvider>
-      <Sidebar collapsible="icon">
+    <SidebarProvider defaultOpen={defaultOpen}>
+      <Sidebar collapsible="icon" className={`${isVendor ? 'bg-gradient-to-b from-white to-emerald-400 !important' : 'bg-gradient-to-b from-white to-cyan-400 !important'}`}>
+        <SidebarHeader className={`${defaultOpen && !isMobile && "p-5"} w-full flex justify-center items-center`}>
+          {defaultOpen || isMobile ?
+            <Image
+              src="/assets/images/reletrify_title.png"
+              width={773}
+              height={216}
+              alt="Reletrify logo"
+            //className="md:w-[140px] sm:w-[128px]"
+            />
+            :
+            <Image
+              src="/assets/images/logo_transparent.png"
+              width={30}
+              height={30}
+              alt="Reletrify logo"
+            //className="md:w-[140px] sm:w-[128px]"
+            />
+          }
+        </SidebarHeader>
         <SidebarContent>
           <SidebarGroup>
             <SidebarGroupLabel>Application</SidebarGroupLabel>
@@ -130,16 +161,10 @@ export function AppSidebar({ children }) {
         </SidebarFooter>
       </Sidebar>
       {/*<header className="px-20 py-6 xl:px-12 md:py-4 sm:px-6 sm:py-4">
-          <Image
-            src="/assets/images/logo_horizontal.png"
-            width={156}
-            height={59}
-            alt="Leah logo"
-            className="md:w-[140px] sm:w-[128px]"
-          />
+          
         </header>*/}
-      <main className={`w-full p-5 ${isVendor ? 'bg-emerald-400' : 'bg-cyan-400'}`}>
-        <SidebarTrigger />
+      <main className={`w-full p-5 ${isVendor ? 'bg-gradient-to-br from-white to-emerald-400' : 'bg-gradient-to-br from-white to-cyan-400'}`}>
+        <SidebarTrigger onClick={handleToggleSidebar} />
         <div className='w-full flex justify-center'>
           {children}
         </div>
