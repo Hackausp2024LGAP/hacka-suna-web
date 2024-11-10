@@ -10,7 +10,13 @@ CREATE TABLE "Usuario" (
 -- CreateTable
 CREATE TABLE "Cliente" (
     "cpfCliente" TEXT NOT NULL PRIMARY KEY,
-    "valorConfirmacao" INTEGER NOT NULL
+    "valorConfirmacao" INTEGER NOT NULL,
+    "cep" TEXT NOT NULL,
+    "rua" TEXT NOT NULL,
+    "numero" INTEGER NOT NULL,
+    "estado" TEXT NOT NULL,
+    "cidade" TEXT NOT NULL,
+    "complemento" TEXT NOT NULL
 );
 
 -- CreateTable
@@ -39,6 +45,7 @@ CREATE TABLE "Pedido" (
     "cpfCliente" TEXT NOT NULL,
     "horarioPedido" DATETIME NOT NULL,
     "statusPedido" BOOLEAN NOT NULL,
+    "categoria" TEXT NOT NULL,
     CONSTRAINT "Pedido_cpfTecnico_fkey" FOREIGN KEY ("cpfTecnico") REFERENCES "Tecnico" ("cpfTecnico") ON DELETE SET NULL ON UPDATE CASCADE,
     CONSTRAINT "Pedido_cpfCliente_fkey" FOREIGN KEY ("cpfCliente") REFERENCES "Cliente" ("cpfCliente") ON DELETE RESTRICT ON UPDATE CASCADE
 );
@@ -86,10 +93,8 @@ CREATE TABLE "Trabalho" (
     "tip" DECIMAL NOT NULL,
     "horarioMensagem" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "dataFimTrabalho" DATETIME,
+    "categoria" TEXT NOT NULL,
     CONSTRAINT "Trabalho_cpfTecnico_fkey" FOREIGN KEY ("cpfTecnico") REFERENCES "Tecnico" ("cpfTecnico") ON DELETE SET NULL ON UPDATE CASCADE,
     CONSTRAINT "Trabalho_cpfCliente_fkey" FOREIGN KEY ("cpfCliente") REFERENCES "Cliente" ("cpfCliente") ON DELETE SET NULL ON UPDATE CASCADE,
     CONSTRAINT "Trabalho_idPedido_fkey" FOREIGN KEY ("idPedido") REFERENCES "Pedido" ("idPedido") ON DELETE SET NULL ON UPDATE CASCADE
 );
-
--- CreateIndex
-CREATE UNIQUE INDEX "Usuario_email_key" ON "Usuario"("email");
