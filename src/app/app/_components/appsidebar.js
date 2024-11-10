@@ -21,6 +21,7 @@ import { useEffect, useState } from "react"
 import Cookies from 'js-cookie'
 import Image from "next/image"
 import { useIsMobile } from "@/hooks/use-mobile"
+import { useRouter } from "next/navigation"
 
 // Menu items.
 const items = [
@@ -36,7 +37,7 @@ const items = [
   },
   {
     title: "Descartes",
-    url: "#",
+    url: "app/descarte",
     icon: RefreshCcw,
   },
   {
@@ -52,12 +53,15 @@ const userChooser = [
     icon: User2,
   },
   {
-    title: "Vendedor",
+    title: "Técnico",
     icon: Briefcase,
   }
 ]
 
 export function AppSidebar({ children }) {
+  const router = useRouter();
+  const currentPath = router.pathname;
+
   const [isVendor, setIsVendor] = useState(false)
   const [chosenUser, setChosenUser] = useState(userChooser[0])
   const [defaultOpen, setDefaultOpen] = useState(false)
@@ -123,7 +127,7 @@ export function AppSidebar({ children }) {
             <SidebarGroupContent>
               <SidebarMenu>
                 {items.map((item) => (
-                  <SidebarMenuItem key={item.title}>
+                  <SidebarMenuItem key={item.title} className={currentPath === item.url ? 'selected-class' : ''}>
                     <SidebarMenuButton asChild>
                       <a href={item.url}>
                         <item.icon />
@@ -163,7 +167,7 @@ export function AppSidebar({ children }) {
       {/*<header className="px-20 py-6 xl:px-12 md:py-4 sm:px-6 sm:py-4">
           
         </header>*/}
-      <main className={`w-full p-5 ${isVendor ? 'bg-gradient-to-br from-white to-emerald-400' : 'bg-gradient-to-br from-white to-cyan-400'}`}>
+      <main className={`w-full p-5 ${isVendor ? 'bg-gradient-to-r from-white to-green-400' : 'bg-gradient-to-r from-white to-blue-400'}`}>
         <SidebarTrigger onClick={handleToggleSidebar} />
         <div className='w-full flex justify-center'>
           {children}
