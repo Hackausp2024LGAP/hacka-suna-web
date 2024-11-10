@@ -14,6 +14,7 @@ import { PrismaClient } from '@prisma/client'
 import { historyJobsList } from "@/store/historyJobs"
 import { AddJobModal } from "./addJobModal"
 import { SendBudget } from "./sendBudget"
+import Image from "next/image"
 const prisma = new PrismaClient()
 
 export function JobsHistory() {
@@ -59,34 +60,44 @@ export function JobsHistory() {
                 .filter(job => (isVendor ? job.Vendor === username : job.Client === username))
                 .map((job, index) => (
                     <Card key={`c${job}-${index}`} className="px-20 py-5">
-                        <CardHeader>
-                            <CardTitle className="uppercase text-xl flex flex-row justify-between">
-                                <div>
-                                    {job.Title}
-                                </div>
-                                <div>
-                                    {(isVendor ? job.Client : job.Vendor)}
-                                </div>
-                            </CardTitle>
-                            <CardDescription className="normal-case text-lg text-inherit">{job.Description}</CardDescription>
-                        </CardHeader>
-                        <CardContent>
-                            <div className="flex flex-row justify-between items-center">
-                                <p className="text-2xl font-medium">{job.Price}</p>
-                                {job.Status === "Pendente" ?
-                                    <div className="flex flex-col items-end space-y-3">
-                                        <div className="flex items-center">
-                                            <p className="text-lg">{job.Status}</p>
+                        <div className="flex w-full">
+                            <Image
+                                src={job.Image}
+                                width={200}
+                                height={200}
+                                alt=""
+                            />
+                            <div className="w-full">
+                                <CardHeader>
+                                    <CardTitle className="text-xl flex flex-row justify-between">
+                                        <div className="uppercase">
+                                            {job.Title}
                                         </div>
-                                        <SendBudget />
-                                    </div> :
-                                    <p className="text-lg">{job.Status}</p>
-                                }
+                                        <div className="font-medium">
+                                            {(isVendor ? job.Client : `Resolvido por: ${job.Vendor}`)}
+                                        </div>
+                                    </CardTitle>
+                                    <CardDescription className="normal-case text-lg text-inherit">{job.Description}</CardDescription>
+                                </CardHeader>
+                                <CardContent>
+                                    <div className="flex flex-row justify-between items-center">
+                                        <p className="text-2xl font-medium">{job.Price}</p>
+                                        {job.Status === "Pendente" && isVendor ?
+                                            <div className="flex flex-col items-end space-y-3">
+                                                <div className="flex items-center">
+                                                    <p className="text-lg">{job.Status}</p>
+                                                </div>
+                                                <SendBudget />
+                                            </div> :
+                                            <p className="text-lg">{job.Status}</p>
+                                        }
+                                    </div>
+                                </CardContent>
+                                <CardFooter>
+                                    <p>{job.FromDate} a {job.ToDate}</p>
+                                </CardFooter>
                             </div>
-                        </CardContent>
-                        <CardFooter>
-                            <p>{job.FromDate} a {job.ToDate}</p>
-                        </CardFooter>
+                        </div>
                     </Card>
                 ))}
         </div>

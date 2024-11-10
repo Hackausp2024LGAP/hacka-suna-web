@@ -1,15 +1,16 @@
 export const historyJobsList = [
     {
         Id: '001',
-        Title: 'Microondas quebrado',
+        Title: 'Geladeira com problema',
         Vendor: 'José',
         Client: 'Roberta',
         Price: 'R$150,00',
         FromDate: '01/05/2024',
         ToDate: '04/05/2024',
         Status: 'Concluído',
-        Category: 'Microondas',
-        Description: 'Microondas não está rodando e esquentando',
+        Category: 'Geladeira',
+        Description: 'Geladeira não está gelando',
+        Image: "/assets/images/eletrodom/geladeira.jpg"
     },
     {
         Id: '002',
@@ -22,17 +23,45 @@ export const historyJobsList = [
         Status: 'Concluído',
         Category: 'Microondas',
         Description: 'Microondas não está rodando e esquentando',
+        Image: "/assets/images/eletrodom/microondas.jpg"
     },
     {
         Id: '003',
         Title: 'Microondas quebrado',
         Vendor: 'José',
-        Client: 'Roberta',
-        Price: 'R$150,00',
+        Client: 'Paulo',
+        Price: 'R$45,00',
         FromDate: '26/09/2024',
         ToDate: '30/09/2024',
         Status: 'Pendente',
         Category: 'Microondas',
         Description: 'Microondas não está rodando e esquentando',
+        Image: "/assets/images/eletrodom/microondas.jpg"
+    },
+    {
+        Id: '004',
+        Title: 'Microondas quebrado',
+        Vendor: 'Alfredo',
+        Client: 'José',
+        Price: 'R$45,00',
+        FromDate: '26/09/2024',
+        ToDate: '30/09/2024',
+        Status: 'Pendente',
+        Category: 'Microondas',
+        Description: 'Microondas não está rodando e esquentando',
+        Image: "/assets/images/eletrodom/microondas.jpg"
+    },
+    {
+        Id: '003',
+        Title: 'Liquidificador lento',
+        Vendor: 'Paulo',
+        Client: 'José',
+        Price: 'R$40,00',
+        FromDate: '13/04/2024',
+        ToDate: '30/09/2024',
+        Status: 'Concluído',
+        Category: 'Liquidificador',
+        Description: 'Liquidificador com problemas',
+        Image: "/assets/images/eletrodom/liquidificador.jpeg"
     },
 ]

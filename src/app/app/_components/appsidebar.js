@@ -103,7 +103,9 @@ export function AppSidebar({ children }) {
 
   return (
     <SidebarProvider defaultOpen={defaultOpen}>
-      <Sidebar collapsible="icon" className={`${isVendor ? 'bg-gradient-to-b from-white to-emerald-400 !important' : 'bg-gradient-to-b from-white to-cyan-400 !important'}`}>
+      <Sidebar collapsible="icon" className={`
+        ${isVendor ? 'bg-gradient-to-b from-white to-emerald-400 !important' : 'bg-gradient-to-b from-white to-cyan-400 !important'}
+        `}>
         <SidebarHeader className={`${defaultOpen && !isMobile && "p-5"} w-full flex justify-center items-center`}>
           {defaultOpen || isMobile ?
             <Image
@@ -125,13 +127,12 @@ export function AppSidebar({ children }) {
         </SidebarHeader>
         <SidebarContent>
           <SidebarGroup>
-            <SidebarGroupLabel>Application</SidebarGroupLabel>
             <SidebarGroupContent>
               <SidebarMenu>
                 {items.map((item) => (
                   <SidebarMenuItem key={item.title} className={currentPath === item.url ? 'selected-class' : ''}>
                     <SidebarMenuButton asChild>
-                      <a href={item.url}>
+                      <a href={item.url} s>
                         <item.icon />
                         <span>{item.title}</span>
                       </a>
