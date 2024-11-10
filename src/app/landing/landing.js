@@ -3,18 +3,20 @@ import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import {useRef} from 'react';
+import { useRouter } from "next/navigation";
 
 export function Landing() {
   const ref = useRef(null);
   const handleClick = () => {
     ref.current?.scrollIntoView({behavior: 'smooth'});
   }
+  const router = useRouter();
   return (
     <>
     <div className="bg-gradient-to-br from-cyan-500 to-violet-600  h-screen w-full flex flex-col justify-center items-center shadow-sm">
       <div className="top-2 right-2 absolute flex text-slate-100 p-2">
-        <Button variant="outline" className="bg-transparent mr-2">Cadastre-se</Button>
-        <Button variant="outline" className="bg-transparent">Log In</Button>
+        <Button onClick={() => {router.push("/auth/sign_up")}} variant="outline" className="bg-transparent mr-2">Cadastre-se</Button>
+        <Button onClick={() => {router.push("/auth/sign_in")}} variant="outline" className="bg-transparent">Log In</Button>
       </div>
       <Image
         src="/assets/images/reletrify_title.png"

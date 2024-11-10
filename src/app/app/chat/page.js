@@ -50,7 +50,7 @@ export default function Page(){
 
   return (
     <div>
-        <p>Pedro muda aqui</p>
+        <p>Chat</p>
         <div>
             {message.map((msg, i) => (
                 <div key={i}>
@@ -59,6 +59,7 @@ export default function Page(){
             ))}
         </div>
         <input 
+            className="outline outline-1 mr-1"
             type="text"
             value={msg}
             onChange={(e) => setMsg(e.target.value)}
