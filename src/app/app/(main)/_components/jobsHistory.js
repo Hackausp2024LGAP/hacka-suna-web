@@ -8,11 +8,21 @@ import {
     CardHeader,
     CardTitle,
 } from "@/components/ui/card"
-import { historyJobsList } from "@/store/historyJobs"
 import Cookies from "js-cookie"
 import { useEffect, useState } from "react"
+import { PrismaClient } from '@prisma/client'
+import { historyJobsList } from "@/store/historyJobs"
+const prisma = new PrismaClient()
 
 export function JobsHistory() {
+    /*const historyJobsList = prisma.Trabalho.findMany({
+        where: {
+            OR: {
+                cpfTecnico: '',
+                cpfCliente: ''
+            }
+        }
+    })*/
     const [isVendor, setIsVendor] = useState(false)
     const [username, setUsername] = useState('José')
 
