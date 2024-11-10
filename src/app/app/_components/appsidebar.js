@@ -36,7 +36,7 @@ const items = [
   },
   {
     title: "Descartes",
-    url: "#",
+    url: "app/descarte",
     icon: RefreshCcw,
   },
   {
